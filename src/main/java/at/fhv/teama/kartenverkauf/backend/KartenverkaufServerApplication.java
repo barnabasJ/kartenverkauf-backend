@@ -1,4 +1,4 @@
-package at.fhv.teama.kartenverkauf.backend.KartenverkaufServer;
+package at.fhv.teama.kartenverkauf.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
