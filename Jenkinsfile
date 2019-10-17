@@ -3,7 +3,7 @@
 pipeline {
   agent {
     docker {
-      image 'openjdk:11-alpine'
+      image 'gradle:5.6-jdk11'
     }
   }
 
