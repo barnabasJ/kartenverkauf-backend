@@ -1,7 +1,11 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'gradle:5.6-jdk11'
+    }
+  }
 
   stages {
     stage('Build') {
