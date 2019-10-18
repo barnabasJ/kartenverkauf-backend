@@ -18,7 +18,7 @@ public class TestClient {
         String input = stdIn.nextLine();
 
         try {
-            IRmiTest rmitest = (IRmiTest) Naming.lookup("rmi://localhost/test");
+            IRmiTest rmitest = (IRmiTest) Naming.lookup("rmi://localhost/IRmiTest");
 
             System.out.println(rmitest.test(input));
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
