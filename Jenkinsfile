@@ -4,7 +4,7 @@ pipeline {
   agent {
     docker {
       image 'gradle:5.6-jdk11'
-      args '--network="host"'
+      args '--network=host'
     }
   }
 
@@ -18,7 +18,7 @@ pipeline {
     stage('Analyze') {
       steps {
         echo 'Building...'
-        sh 'gralde --no-daemon sonarqube'
+        sh 'gradle --no-daemon sonarqube'
       }
     }
   }
