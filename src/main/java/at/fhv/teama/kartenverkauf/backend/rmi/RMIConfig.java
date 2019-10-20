@@ -1,5 +1,6 @@
 package at.fhv.teama.kartenverkauf.backend.rmi;
 
+import at.fhv.teama.kartenverkauf.rmi.EasyTicketService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
@@ -11,17 +12,16 @@ import java.rmi.registry.Registry;
 public class RMIConfig {
 
     @Bean
-    IRmiTest rmiTest() throws RemoteException {
-        return new RmiTest();
+    EasyTicketService easyTicketService() throws RemoteException {
+        return new EasyTicketServiceImpl();
     }
 
     @Bean
-    RmiServiceExporter  exporter(IRmiTest implementation) {
-        Class<IRmiTest> serviceInterface = IRmiTest.class;
+    RmiServiceExporter  exporter(EasyTicketService implementation) {
+        Class<EasyTicketService> serviceInterface = EasyTicketService.class;
         RmiServiceExporter serviceExporter = new RmiServiceExporter();
         serviceExporter.setServiceInterface(serviceInterface);
         serviceExporter.setService(implementation);
-        System.out.println(serviceInterface.getSimpleName());
         serviceExporter.setServiceName(serviceInterface.getSimpleName());
         serviceExporter.setRegistryPort(Registry.REGISTRY_PORT);
         return serviceExporter;

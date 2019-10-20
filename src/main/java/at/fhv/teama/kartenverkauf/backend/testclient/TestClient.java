@@ -1,26 +1,20 @@
 package at.fhv.teama.kartenverkauf.backend.testclient;
 
-import at.fhv.teama.kartenverkauf.backend.rmi.IRmiTest;
+import at.fhv.teama.kartenverkauf.dto.AddressDto;
+import at.fhv.teama.kartenverkauf.rmi.EasyTicketService;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 public class TestClient {
 
     public static void main(String[] args) {
-        Scanner stdIn = new Scanner(System.in);
-
-        System.out.println("Enter first name");
-
-        String input = stdIn.nextLine();
-
         try {
-            IRmiTest rmitest = (IRmiTest) Naming.lookup("rmi://localhost/IRmiTest");
-
-            System.out.println(rmitest.test(input));
+            EasyTicketService rmitest = (EasyTicketService) Naming.lookup("rmi://localhost/IRmiTest");
+            rmitest.saveAddress(new AddressDto());
+            System.out.println("Saved Address");
         } catch (RemoteException | NotBoundException | MalformedURLException e) {
             System.out.println("Client error: " + e.getMessage());
             e.printStackTrace();
