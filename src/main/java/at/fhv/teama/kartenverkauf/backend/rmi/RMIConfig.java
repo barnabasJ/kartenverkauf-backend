@@ -12,11 +12,6 @@ import java.rmi.registry.Registry;
 public class RMIConfig {
 
     @Bean
-    EasyTicketService easyTicketService() throws RemoteException {
-        return new EasyTicketServiceImpl();
-    }
-
-    @Bean
     RmiServiceExporter  exporter(EasyTicketService implementation) {
         Class<EasyTicketService> serviceInterface = EasyTicketService.class;
         RmiServiceExporter serviceExporter = new RmiServiceExporter();
