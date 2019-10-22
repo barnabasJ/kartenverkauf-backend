@@ -1,4 +1,4 @@
-package at.fhv.teama.kartenverkauf.backend.testclient;
+package at.fhv.teama.easyticket.server.testclient;
 
 import at.fhv.teama.kartenverkauf.dto.AddressDto;
 import at.fhv.teama.kartenverkauf.rmi.EasyTicketService;

@@ -1,6 +1,6 @@
-package at.fhv.teama.kartenverkauf.backend.rmi;
+package at.fhv.teama.easyticket.server.rmi;
 
-import at.fhv.teama.kartenverkauf.backend.ProgramService;
+import at.fhv.teama.easyticket.server.ProgramService;
 import at.fhv.teama.kartenverkauf.dto.AddressDto;
 import at.fhv.teama.kartenverkauf.dto.ProgramDto;
 import at.fhv.teama.kartenverkauf.rmi.EasyTicketService;
