@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.rmi.RMISecurityManager;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
 
@@ -32,6 +33,7 @@ public class RMIConfig {
 
     @Bean
     RmiServiceExporter  exporter(EasyTicketService implementation) {
+        System.setSecurityManager(new SecurityManager());
         Class<EasyTicketService> serviceInterface = EasyTicketService.class;
         RmiServiceExporter serviceExporter = new RmiServiceExporter();
         serviceExporter.setServiceInterface(serviceInterface);
