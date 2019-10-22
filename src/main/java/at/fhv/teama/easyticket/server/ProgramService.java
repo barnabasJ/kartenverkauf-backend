@@ -1,4 +1,4 @@
-package at.fhv.teama.kartenverkauf.backend;
+package at.fhv.teama.easyticket.server;
 
 import at.fhv.teama.kartenverkauf.dto.ProgramDto;
 import org.springframework.stereotype.Service;

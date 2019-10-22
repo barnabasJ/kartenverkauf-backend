@@ -1,4 +1,4 @@
-package at.fhv.teama.kartenverkauf.backend.rmi;
+package at.fhv.teama.easyticket.server.rmi;
 
 import at.fhv.teama.kartenverkauf.rmi.EasyTicketService;
 import org.springframework.context.annotation.Bean;

@@ -1,13 +1,13 @@
-package at.fhv.teama.kartenverkauf.backend;
+package at.fhv.teama.easyticket.server;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KartenverkaufServerApplication {
+public class EasyTicketServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KartenverkaufServerApplication.class, args);
+		SpringApplication.run(EasyTicketServerApplication.class, args);
 	}
 
 }
