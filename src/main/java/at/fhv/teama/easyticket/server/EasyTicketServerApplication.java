@@ -21,7 +21,6 @@ public class EasyTicketServerApplication {
     if (System.getSecurityManager() == null) {
       System.setSecurityManager(new SecurityManager());
     }
-    System.setSecurityManager(new SecurityManager());
     SpringApplication.run(EasyTicketServerApplication.class, args);
   }
 }
