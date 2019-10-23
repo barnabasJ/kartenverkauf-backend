@@ -33,7 +33,6 @@ public class RMIConfig {
 
     @Bean
     RmiServiceExporter  exporter(EasyTicketService implementation) {
-        System.setSecurityManager(new SecurityManager());
         Class<EasyTicketService> serviceInterface = EasyTicketService.class;
         RmiServiceExporter serviceExporter = new RmiServiceExporter();
         serviceExporter.setServiceInterface(serviceInterface);

@@ -40,10 +40,6 @@ repositories {
     maven { url 'https://www.jitpack.io' }
 }
 
-bootRun {
-    systemProperties['java.security.policy'] = '/home/joba/fh/kartenverkauf/client/client.policy'
-}
-
 dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
     annotationProcessor 'org.projectlombok:lombok'
