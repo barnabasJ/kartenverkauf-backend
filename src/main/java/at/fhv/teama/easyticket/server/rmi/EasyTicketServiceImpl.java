@@ -16,6 +16,6 @@ public class EasyTicketServiceImpl implements EasyTicketService {
     private final VenueController venueController;
     @Override
     public Set<VenueDto> getAllVenues() {
-        return null;
+        return venueController.getAllVenues();
     }
 }
