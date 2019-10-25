@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class UserPrincipal implements UserDetails {
-    private User user;
+    private EasyTicketUser user;
 
-    public UserPrincipal(User user) {
+    public UserPrincipal(EasyTicketUser user) {
         this.user = user;
     }
 
