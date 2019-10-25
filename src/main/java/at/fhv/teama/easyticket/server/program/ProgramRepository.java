@@ -1,4 +1,4 @@
-package at.fhv.teama.easyticket.server;
+package at.fhv.teama.easyticket.server.program;
 
 import org.springframework.data.repository.CrudRepository;
 

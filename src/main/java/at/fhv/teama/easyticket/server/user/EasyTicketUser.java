@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class EasyTicketUser {
     @Id
     private String username;
     private String password;

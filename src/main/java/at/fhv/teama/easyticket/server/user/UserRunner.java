@@ -1,6 +1,6 @@
 package at.fhv.teama.easyticket.server.user;
 
-import at.fhv.teama.easyticket.server.ProgramService;
+import at.fhv.teama.easyticket.server.program.ProgramService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,7 +28,7 @@ public class UserRunner implements CommandLineRunner {
     log.info("UserRunner started");
     SecurityContext sc = SecurityContextHolder.getContext();
     log.info(sc.toString());
-    User bob = new User("bob", passwordEncoder.encode("password"));
+    EasyTicketUser bob = new EasyTicketUser("bob", passwordEncoder.encode("password"));
     userRepo.save(bob);
     Authentication request = new UsernamePasswordAuthenticationToken(bob.getUsername(), "password");
     request.setAuthenticated(false);

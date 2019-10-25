@@ -1,6 +1,6 @@
-package at.fhv.teama.easyticket.server;
+package at.fhv.teama.easyticket.server.program;
 
-import at.fhv.teama.kartenverkauf.dto.ProgramDto;
+import at.fhv.teama.easyticket.dto.ProgramDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
