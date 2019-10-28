@@ -14,4 +14,12 @@ public class VenueService {
   public Set<Venue> getAllVenues() {
     return venueRepo.findAllByDateGreaterThanEqual(LocalDateTime.now());
   }
+
+  public Set<Venue> getAllVenuesByGenere(String genre) {
+    return venueRepo.findAllByProgram_GenreLikeAndDateGreaterThanEqual(genre,LocalDateTime.now());
+  }
+
+  public Set<Venue> getAllVenuesByDate(LocalDateTime date) {
+    return venueRepo.findAllByDateAndDateGreaterThanEqual(date, LocalDateTime.now());
+  }
 }

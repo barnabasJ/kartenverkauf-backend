@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -20,5 +21,17 @@ public class VenueController {
     return venueService.getAllVenues().stream()
         .map(v -> venueMapper.venueToVenueDto(v, new MapperContext()))
         .collect(Collectors.toSet());
+  }
+
+  public Set<VenueDto> getAllVenuesByGenre(String genre) {
+    return venueService.getAllVenuesByGenere(genre).stream()
+            .map(venueMapper::venueToVenueDto)
+            .collect(Collectors.toSet());
+  }
+
+  public Set<VenueDto> getAllVenuesByDate(LocalDateTime date) {
+    return venueService.getAllVenuesByDate(date).stream()
+            .map(venueMapper::venueToVenueDto)
+            .collect(Collectors.toSet());
   }
 }
