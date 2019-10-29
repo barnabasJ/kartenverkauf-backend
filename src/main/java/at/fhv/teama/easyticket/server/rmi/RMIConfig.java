@@ -1,6 +1,10 @@
 package at.fhv.teama.easyticket.server.rmi;
 
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.remoting.rmi.RmiServiceExporter;
@@ -14,8 +18,12 @@ import java.util.HashMap;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@ConfigurationProperties(prefix = "server")
+@Slf4j
 public class RMIConfig {
-
+  @Getter
+  @Setter
+  private int port;
   @Bean
   public PasswordEncoder passwordEncoder() {
     HashMap<String, PasswordEncoder> encoders = new HashMap<>();
@@ -31,6 +39,8 @@ public class RMIConfig {
   RmiServiceExporter exporter(EasyTicketService implementation) {
     Class<EasyTicketService> serviceInterface = EasyTicketService.class;
     RmiServiceExporter serviceExporter = new RmiServiceExporter();
+    log.info("Starting RmiService on Port: " + port);
+    serviceExporter.setRegistryPort(port);
     serviceExporter.setServiceInterface(serviceInterface);
     serviceExporter.setService(implementation);
     serviceExporter.setServiceName(serviceInterface.getSimpleName());
