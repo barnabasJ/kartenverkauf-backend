@@ -18,9 +18,6 @@ public class EasyTicketServerApplication {
             return p;
           }
         });
-    if (System.getSecurityManager() == null) {
-      System.setSecurityManager(new SecurityManager());
-    }
     SpringApplication.run(EasyTicketServerApplication.class, args);
   }
 }

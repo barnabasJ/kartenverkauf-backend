@@ -21,9 +21,8 @@ import java.util.HashMap;
 @ConfigurationProperties(prefix = "server")
 @Slf4j
 public class RMIConfig {
-  @Getter
-  @Setter
-  private int port;
+  @Getter @Setter private int port;
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     HashMap<String, PasswordEncoder> encoders = new HashMap<>();
@@ -38,8 +37,8 @@ public class RMIConfig {
   @Bean
   RmiServiceExporter exporter(EasyTicketService implementation) {
     Class<EasyTicketService> serviceInterface = EasyTicketService.class;
+    log.info("String RMI Service on Port: " + port);
     RmiServiceExporter serviceExporter = new RmiServiceExporter();
-    log.info("Starting RmiService on Port: " + port);
     serviceExporter.setRegistryPort(port);
     serviceExporter.setServiceInterface(serviceInterface);
     serviceExporter.setService(implementation);

@@ -13,9 +13,10 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class EasyTicketServiceImpl implements EasyTicketService {
-    private final VenueController venueController;
-    @Override
-    public Set<VenueDto> getAllVenues() {
-        return venueController.getAllVenues();
-    }
+  private final VenueController venueController;
+
+  @Override
+  public Set<VenueDto> getAllVenues() {
+    return venueController.getAllVenues();
+  }
 }
