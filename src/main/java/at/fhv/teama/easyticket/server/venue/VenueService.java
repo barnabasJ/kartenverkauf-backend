@@ -22,4 +22,8 @@ public class VenueService {
   public Set<Venue> getAllVenuesByDate(LocalDateTime date) {
     return venueRepo.findAllByDateAndDateGreaterThanEqual(date, LocalDateTime.now());
   }
+
+  public Set<Venue> getAllVenuesbyDescription(String descritpion) {
+    return venueRepo.findAllByProgram_DescriptionLikeAndDateGreaterThanEqual(descritpion, LocalDateTime.now());
+  }
 }

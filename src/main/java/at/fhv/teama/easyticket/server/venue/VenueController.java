@@ -34,4 +34,10 @@ public class VenueController {
             .map(venueMapper::venueToVenueDto)
             .collect(Collectors.toSet());
   }
+
+  public Set<VenueDto> getAllVenuesByDescription(String description) {
+    return venueService.getAllVenuesbyDescription(description).stream()
+            .map(venueMapper::venueToVenueDto)
+            .collect(Collectors.toSet());
+  }
 }

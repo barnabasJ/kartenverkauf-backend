@@ -9,8 +9,9 @@ import java.util.Set;
 public interface VenueRepository extends CrudRepository<Venue, Long> {
     Set<Venue> findAllByDateGreaterThanEqual(LocalDateTime date);
 
-    Set<Venue> findAllByDateAndDateGreaterThanEqual(LocalDateTime date, LocalDateTime dateNow);
+    Set<Venue> findAllByDateAndDateGreaterThanEqual(LocalDateTime date, LocalDateTime dateNow);   //findAllByDateEqualAndDateGreaterThanEqual?
 
     Set<Venue> findAllByProgram_GenreLikeAndDateGreaterThanEqual(String genre, LocalDateTime date);
 
+    Set<Venue> findAllByProgram_DescriptionLikeAndDateGreaterThanEqual(String description, LocalDateTime date);
 }
