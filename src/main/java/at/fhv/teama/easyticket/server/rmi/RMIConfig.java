@@ -43,7 +43,7 @@ public class RMIConfig {
       serviceExporter.setRegistryPort(port);
     }
     if (hostname != null && !hostname.isBlank()) {
-      serviceExporter.setRegistryHost(hostname);
+      System.setProperty("java.rmi.server.hostname", hostname);
     }
     serviceExporter.setServiceInterface(serviceInterface);
     serviceExporter.setService(implementation);
