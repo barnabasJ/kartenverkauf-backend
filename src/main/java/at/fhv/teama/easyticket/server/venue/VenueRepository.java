@@ -14,4 +14,6 @@ public interface VenueRepository extends CrudRepository<Venue, Long> {
     Set<Venue> findAllByProgram_GenreLikeAndDateGreaterThanEqual(String genre, LocalDateTime date);
 
     Set<Venue> findAllByProgram_DescriptionLikeAndDateGreaterThanEqual(String description, LocalDateTime date);
+
+    //Set<Venue> findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLike(LocalDateTime date, LocalDateTime dateNow, String genre, String description);
 }

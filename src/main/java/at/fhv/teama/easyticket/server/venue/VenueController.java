@@ -23,18 +23,21 @@ public class VenueController {
         .collect(Collectors.toSet());
   }
 
+  @Transactional(readOnly = true)
   public Set<VenueDto> getAllVenuesByGenre(String genre) {
     return venueService.getAllVenuesByGenere(genre).stream()
             .map(venueMapper::venueToVenueDto)
             .collect(Collectors.toSet());
   }
 
+  @Transactional(readOnly = true)
   public Set<VenueDto> getAllVenuesByDate(LocalDateTime date) {
     return venueService.getAllVenuesByDate(date).stream()
             .map(venueMapper::venueToVenueDto)
             .collect(Collectors.toSet());
   }
 
+  @Transactional(readOnly = true)
   public Set<VenueDto> getAllVenuesByDescription(String description) {
     return venueService.getAllVenuesbyDescription(description).stream()
             .map(venueMapper::venueToVenueDto)

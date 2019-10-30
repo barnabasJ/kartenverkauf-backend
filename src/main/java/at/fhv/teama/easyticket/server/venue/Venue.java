@@ -22,7 +22,7 @@ public class Venue {
     private LocalDateTime date;
     @ManyToOne
     private Address address;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Program program;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "venue")
     @EqualsAndHashCode.Exclude
