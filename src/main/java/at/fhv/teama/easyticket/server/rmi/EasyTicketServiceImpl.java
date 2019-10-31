@@ -10,6 +10,7 @@ import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.person.PersonRepo;
 import at.fhv.teama.easyticket.server.program.ProgramRepository;
 import at.fhv.teama.easyticket.server.venue.VenueController;
+import at.fhv.teama.easyticket.server.venue.ticket.TicketRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -57,4 +58,6 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
       return new HashSet<>();
   }
+
+
 }
