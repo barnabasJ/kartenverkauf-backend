@@ -28,12 +28,13 @@ public class VenueServiceTest {
   @Test
   public void getAllVenuesONE() {
 
+    LocalDateTime localDateTime = LocalDateTime.now();
     Venue oldVenue = new Venue();
-    oldVenue.setDate(LocalDateTime.now().minusDays(1));
+    oldVenue.setDate(localDateTime.minusDays(1));
     oldVenue = venueRepo.save(oldVenue);
 
     Venue futureVenue = new Venue();
-    futureVenue.setDate(LocalDateTime.now().plusMinutes(2));
+    futureVenue.setDate(localDateTime.plusMinutes(2));
     futureVenue=venueRepo.save(futureVenue);
 
     VenueDto futureVenueDTO = venueMapper.venueToVenueDto(futureVenue);
@@ -43,20 +44,21 @@ public class VenueServiceTest {
   @Test
   public void getAllVenuesMULTIPLE() {
 
+    LocalDateTime localDateTime = LocalDateTime.now();
     Venue oldVenue = new Venue();
-    oldVenue.setDate(LocalDateTime.now().minusDays(1));
+    oldVenue.setDate(localDateTime.minusDays(1));
     venueRepo.save(oldVenue);
 
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
+    futureVenue0.setDate(localDateTime.plusMinutes(2));
     venueRepo.save(futureVenue0);
 
     Venue futureVenue1 = new Venue();
-    futureVenue1.setDate(LocalDateTime.now().plusDays(1));
+    futureVenue1.setDate(localDateTime.plusDays(1));
     venueRepo.save(futureVenue1);
 
     Venue futureVenue2 = new Venue();
-    futureVenue2.setDate(LocalDateTime.now().plusDays(2));
+    futureVenue2.setDate(localDateTime.plusDays(2));
     venueRepo.save(futureVenue2);
 
     VenueDto futureVenue0DTO = venueMapper.venueToVenueDto(futureVenue0);
@@ -69,31 +71,32 @@ public class VenueServiceTest {
 
   @Test
   public void getAllVenuesByGenre(){
+    LocalDateTime localDateTime = LocalDateTime.now();
     Program oldProgram = new Program();
     oldProgram.setGenre("Theater");
     Venue oldVenue = new Venue();
-    oldVenue.setDate(LocalDateTime.now().minusDays(1));
+    oldVenue.setDate(localDateTime.minusDays(1));
     oldVenue.setProgram(oldProgram);
     venueRepo.save(oldVenue);
 
     Program futureProgram0 = new Program();
     futureProgram0.setGenre("Klassik");
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
+    futureVenue0.setDate(localDateTime.plusMinutes(2));
     futureVenue0.setProgram(futureProgram0);
     venueRepo.save(futureVenue0);
 
     Program futureProgram1 = new Program();
     futureProgram1.setGenre("Konzert");
     Venue futureVenue1 = new Venue();
-    futureVenue1.setDate(LocalDateTime.now().plusDays(1));
+    futureVenue1.setDate(localDateTime.plusDays(1));
     futureVenue1.setProgram(futureProgram1);
     venueRepo.save(futureVenue1);
 
     Program futureProgram2 = new Program();
     futureProgram2.setGenre("Theater");
     Venue futureVenue2 = new Venue();
-    futureVenue2.setDate(LocalDateTime.now().plusDays(2));
+    futureVenue2.setDate(localDateTime.plusDays(2));
     futureVenue2.setProgram(futureProgram2);
     venueRepo.save(futureVenue2);
 
@@ -103,53 +106,55 @@ public class VenueServiceTest {
 
   @Test
   public void getAllVenuesByDate(){
+    LocalDateTime localDateTime = LocalDateTime.now();
     Venue oldVenue = new Venue();
-    oldVenue.setDate(LocalDateTime.now().minusDays(1));
+    oldVenue.setDate(localDateTime.minusDays(1));
     venueRepo.save(oldVenue);
 
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
+    futureVenue0.setDate(localDateTime.plusMinutes(2));
     venueRepo.save(futureVenue0);
 
     Venue futureVenue1 = new Venue();
-    futureVenue1.setDate(LocalDateTime.now().plusDays(1));
+    futureVenue1.setDate(localDateTime.plusDays(1));
     venueRepo.save(futureVenue1);
 
     Venue futureVenue2 = new Venue();
-    futureVenue2.setDate(LocalDateTime.now().plusDays(2));
+    futureVenue2.setDate(localDateTime.plusDays(2));
     venueRepo.save(futureVenue2);
 
     VenueDto futureVenue1DTO = venueMapper.venueToVenueDto(futureVenue1);
-    assertEquals(Set.of(futureVenue1DTO),venueController.getAllVenuesByDate(LocalDateTime.now().plusDays(1)));
+    assertEquals(Set.of(futureVenue1DTO),venueController.getAllVenuesByDate(localDateTime.plusDays(1)));
   }
 
   @Test
   public void getAllVenuesByDescription(){
+    LocalDateTime localDateTime = LocalDateTime.now();
     Program oldProgram = new Program();
     oldProgram.setDescription("Schanensee");
     Venue oldVenue = new Venue();
-    oldVenue.setDate(LocalDateTime.now().minusDays(1));
+    oldVenue.setDate(localDateTime.minusDays(1));
     oldVenue.setProgram(oldProgram);
     venueRepo.save(oldVenue);
 
     Program futureProgram0 = new Program();
     futureProgram0.setDescription("Zauberflöte");   //ö ä ü in DB?
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
+    futureVenue0.setDate(localDateTime.plusMinutes(2));
     futureVenue0.setProgram(futureProgram0);
     venueRepo.save(futureVenue0);
 
     Program futureProgram1 = new Program();
     futureProgram1.setDescription("Moonwalk");
     Venue futureVenue1 = new Venue();
-    futureVenue1.setDate(LocalDateTime.now().plusDays(1));
+    futureVenue1.setDate(localDateTime.plusDays(1));
     futureVenue1.setProgram(futureProgram1);
     venueRepo.save(futureVenue1);
 
     Program futureProgram2 = new Program();
     futureProgram2.setDescription("Supertalent");
     Venue futureVenue2 = new Venue();
-    futureVenue2.setDate(LocalDateTime.now().plusDays(2));
+    futureVenue2.setDate(localDateTime.plusDays(2));
     futureVenue2.setProgram(futureProgram2);
     venueRepo.save(futureVenue2);
 
