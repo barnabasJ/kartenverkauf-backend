@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -17,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Transactional
 public class VenueServiceTest {
   @Autowired private VenueRepository venueRepo;
   @Autowired private VenueController venueController;
@@ -30,14 +33,11 @@ public class VenueServiceTest {
     oldVenue = venueRepo.save(oldVenue);
 
     Venue futureVenue = new Venue();
-    futureVenue.setDate(LocalDateTime.now().plusDays(1));
+    futureVenue.setDate(LocalDateTime.now().plusMinutes(2));
     futureVenue=venueRepo.save(futureVenue);
 
     VenueDto futureVenueDTO = venueMapper.venueToVenueDto(futureVenue);
-    //futureVenueDTO.setId((long) 2);
     assertEquals(Set.of(futureVenueDTO), venueController.getAllVenues());
-    venueRepo.delete(oldVenue);
-    venueRepo.delete(futureVenue);
   }
 
   @Test
@@ -48,7 +48,7 @@ public class VenueServiceTest {
     venueRepo.save(oldVenue);
 
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now());
+    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
     venueRepo.save(futureVenue0);
 
     Venue futureVenue1 = new Venue();
@@ -65,10 +65,6 @@ public class VenueServiceTest {
 
     //futureVenueDTO.setId((long) 2);
     assertEquals(Set.of(futureVenue0DTO, futureVenue1DTO, futureVenue2DTO), venueController.getAllVenues());
-    venueRepo.delete(oldVenue);
-    venueRepo.delete(futureVenue0);
-    venueRepo.delete(futureVenue1);
-    venueRepo.delete(futureVenue2);
   }
 
   @Test
@@ -83,7 +79,7 @@ public class VenueServiceTest {
     Program futureProgram0 = new Program();
     futureProgram0.setGenre("Klassik");
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now());
+    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
     futureVenue0.setProgram(futureProgram0);
     venueRepo.save(futureVenue0);
 
@@ -103,10 +99,6 @@ public class VenueServiceTest {
 
     VenueDto futureVenue2DTO = venueMapper.venueToVenueDto(futureVenue2);
     assertEquals(Set.of(futureVenue2DTO),venueController.getAllVenuesByGenre("Theater"));
-    venueRepo.delete(oldVenue);
-    venueRepo.delete(futureVenue0);
-    venueRepo.delete(futureVenue1);
-    venueRepo.delete(futureVenue2);
   }
 
   @Test
@@ -116,7 +108,7 @@ public class VenueServiceTest {
     venueRepo.save(oldVenue);
 
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now());
+    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
     venueRepo.save(futureVenue0);
 
     Venue futureVenue1 = new Venue();
@@ -129,10 +121,6 @@ public class VenueServiceTest {
 
     VenueDto futureVenue1DTO = venueMapper.venueToVenueDto(futureVenue1);
     assertEquals(Set.of(futureVenue1DTO),venueController.getAllVenuesByDate(LocalDateTime.now().plusDays(1)));
-    venueRepo.delete(oldVenue);
-    venueRepo.delete(futureVenue0);
-    venueRepo.delete(futureVenue1);
-    venueRepo.delete(futureVenue2);
   }
 
   @Test
@@ -147,7 +135,7 @@ public class VenueServiceTest {
     Program futureProgram0 = new Program();
     futureProgram0.setDescription("Zauberflöte");   //ö ä ü in DB?
     Venue futureVenue0 = new Venue();
-    futureVenue0.setDate(LocalDateTime.now());
+    futureVenue0.setDate(LocalDateTime.now().plusMinutes(2));
     futureVenue0.setProgram(futureProgram0);
     venueRepo.save(futureVenue0);
 
@@ -166,10 +154,6 @@ public class VenueServiceTest {
     venueRepo.save(futureVenue2);
 
     VenueDto futureVenue1DTO = venueMapper.venueToVenueDto(futureVenue1);
-    assertEquals(Set.of(futureVenue1DTO),venueController.getAllVenuesByGenre("Moonwalk"));
-    venueRepo.delete(oldVenue);
-    venueRepo.delete(futureVenue0);
-    venueRepo.delete(futureVenue1);
-    venueRepo.delete(futureVenue2);
+    assertEquals(Set.of(futureVenue1DTO),venueController.getAllVenuesByDescription("Moonwalk"));
   }
 }
