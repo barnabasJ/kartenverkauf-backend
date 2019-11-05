@@ -36,7 +36,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<VenueDto> getAllVenues() {
-    return venueController.getAllVenues();
+    return venueController.getAllVenuesByFilter(null,null,null,null);
   }
 
 
@@ -47,7 +47,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<VenueDto> searchVenue(String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
-    return getAllVenues();
+    return venueController.getAllVenuesByFilter(from,to,genre,description);
   }
 
   @Override

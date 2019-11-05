@@ -16,6 +16,7 @@ public class VenueController {
   private final VenueService venueService;
   private final VenueMapper venueMapper;
 
+  /*
   @Transactional(readOnly = true)
   public Set<VenueDto> getAllVenues() {
     return venueService.getAllVenues().stream()
@@ -42,5 +43,44 @@ public class VenueController {
     return venueService.getAllVenuesbyDescription(description).stream()
             .map(venueMapper::venueToVenueDto)
             .collect(Collectors.toSet());
+  }*/
+
+  @Transactional(readOnly = true)
+  public Set<VenueDto> getAllVenuesByFilter(LocalDateTime localDateTimeStart, LocalDateTime localDateTimeEnd, String genre, String description) {
+      genre = sanitizeStringInput(genre);
+      description = sanitizeStringInput(description);
+      localDateTimeStart = sanitizeDateStart(localDateTimeStart);
+      localDateTimeEnd = sanitizeDateEnd(localDateTimeEnd);
+      return venueService.getAllVenusByFilter(localDateTimeStart, localDateTimeEnd, genre, description ).stream()
+              .map( v-> venueMapper.venueToVenueDto(v, new MapperContext()))
+              .collect(Collectors.toSet());
+  }
+
+  private String sanitizeStringInput(String input) {
+    String sanitizedString = input != null ? input.trim() : "";
+    if (sanitizedString.isBlank()) {
+      return "%";
+    }
+    return "%" + input + "%";
+  }
+
+  private LocalDateTime sanitizeDateStart(LocalDateTime input) {
+
+    if (input == null) {
+      return LocalDateTime.now();
+    }
+    return input;
+  }
+
+  private LocalDateTime sanitizeDateEnd(LocalDateTime input) {
+
+    if (input == null) {
+      return LocalDateTime.now().plusMonths(12);
+    }
+    return input;
+  }
+
+  public Set<VenueDto> getAllVenues() {
+    return getAllVenuesByFilter(null,null,null,null);
   }
 }
