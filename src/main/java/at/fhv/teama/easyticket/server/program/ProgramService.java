@@ -16,9 +16,10 @@ public class ProgramService {
   private ProgramMapper programMapper;
   private EntityManager em;
 
-  public ProgramService(ProgramRepository programRepo, ProgramMapper programMapper) {
+  public ProgramService(ProgramRepository programRepo, ProgramMapper programMapper, EntityManager em) {
     this.programRepo = programRepo;
     this.programMapper = programMapper;
+    this.em = em;
   }
 
   public void saveProgram(ProgramDto programDto) {
