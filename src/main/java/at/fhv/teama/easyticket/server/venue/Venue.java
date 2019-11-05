@@ -4,6 +4,8 @@ import at.fhv.teama.easyticket.server.address.Address;
 import at.fhv.teama.easyticket.server.program.Program;
 import at.fhv.teama.easyticket.server.venue.ticket.Ticket;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -21,6 +23,8 @@ public class Venue {
     private Address address;
     @ManyToOne
     private Program program;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "venue")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Ticket> tickets = new HashSet<Ticket>();
 }

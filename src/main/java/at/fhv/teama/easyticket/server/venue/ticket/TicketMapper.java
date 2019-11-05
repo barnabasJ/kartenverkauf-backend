@@ -1,6 +1,6 @@
-package at.fhv.teama.easyticket.server.venue;
+package at.fhv.teama.easyticket.server.venue.ticket;
 
-import at.fhv.teama.easyticket.dto.VenueDto;
+import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.server.MapperContext;
 import at.fhv.teama.easyticket.server.address.AddressMapper;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
@@ -13,9 +13,9 @@ import org.mapstruct.NullValueCheckStrategy;
     componentModel = "spring",
     nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
     uses = {ProgramMapper.class, PersonMapper.class, AddressMapper.class})
-public interface VenueMapper {
+public interface TicketMapper {
 
-  VenueDto venueToVenueDto(Venue venue, @Context MapperContext context);
+  TicketDto ticketToTicketDto(Ticket ticket, @Context MapperContext context);
 
-  Venue venueDtoToVenue(VenueDto venue, @Context MapperContext context);
+  Ticket ticketDtoToTicket(TicketDto ticket, @Context MapperContext context);
 }

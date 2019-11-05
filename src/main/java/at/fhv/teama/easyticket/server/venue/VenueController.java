@@ -1,6 +1,7 @@
 package at.fhv.teama.easyticket.server.venue;
 
 import at.fhv.teama.easyticket.dto.VenueDto;
+import at.fhv.teama.easyticket.server.MapperContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class VenueController {
   @Transactional(readOnly = true)
   public Set<VenueDto> getAllVenues() {
     return venueService.getAllVenues().stream()
-        .map(venueMapper::venueToVenueDto)
+        .map(v -> venueMapper.venueToVenueDto(v, new MapperContext()))
         .collect(Collectors.toSet());
   }
 }

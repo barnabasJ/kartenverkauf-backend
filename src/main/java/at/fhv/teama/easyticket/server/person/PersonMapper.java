@@ -1,8 +1,10 @@
 package at.fhv.teama.easyticket.server.person;
 
 import at.fhv.teama.easyticket.dto.PersonDto;
+import at.fhv.teama.easyticket.server.MapperContext;
 import at.fhv.teama.easyticket.server.address.AddressMapper;
 import at.fhv.teama.easyticket.server.venue.VenueMapper;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
@@ -12,7 +14,7 @@ import org.mapstruct.NullValueCheckStrategy;
     uses = {AddressMapper.class})
 public interface PersonMapper {
 
-  PersonDto personToPersonDto(Person person);
+  PersonDto personToPersonDto(Person person, @Context MapperContext context);
 
-  Person personDtoToPerson(PersonDto person);
+  Person personDtoToPerson(PersonDto person, @Context MapperContext context);
 }
