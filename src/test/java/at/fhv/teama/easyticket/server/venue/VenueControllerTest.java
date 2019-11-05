@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class VenueServiceTest {
+public class VenueControllerTest {
   @Autowired private VenueRepository venueRepo;
   @Autowired private VenueController venueController;
   @Autowired private VenueMapper venueMapper;
