@@ -9,12 +9,12 @@ import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.person.PersonRepo;
 import at.fhv.teama.easyticket.server.program.ProgramRepository;
 import at.fhv.teama.easyticket.server.venue.VenueController;
+import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -23,6 +23,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class EasyTicketServiceImpl implements EasyTicketService {
   private final VenueController venueController;
+  private final TicketController ticketController;
 
   // TODO remove
   private final ProgramRepository programRepo;
@@ -55,6 +56,6 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
-    return new HashSet<>();
+    return ticketController.buyTickets(tickets);
   }
 }

@@ -11,13 +11,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
 @Mapper(
-    componentModel = "spring",
-    nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
-    uses = {ProgramMapper.class, PersonMapper.class, AddressMapper.class})
+        componentModel = "spring",
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        uses = {ProgramMapper.class, PersonMapper.class, AddressMapper.class})
 public interface TicketMapper {
 
-  TicketDto ticketToTicketDto(Ticket ticket, @Context MapperContext context);
+    TicketDto ticketToTicketDto(Ticket ticket, @Context MapperContext context);
 
-  Ticket ticketDtoToTicket(TicketDto ticket, @Context MapperContext context);
+    Ticket ticketDtoToTicket(TicketDto ticket, @Context MapperContext context);
 }
 
