@@ -11,19 +11,16 @@ import at.fhv.teama.easyticket.server.person.PersonRepo;
 import at.fhv.teama.easyticket.server.program.ProgramRepository;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
-
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EasyTicketServiceImpl implements EasyTicketService {
@@ -36,19 +33,19 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<VenueDto> getAllVenues() {
-    return venueController.getAllVenuesByFilter(null,null,null,null);
+    return venueController.getAllVenuesByFilter(null, null, null, null, null);
   }
-
 
   @Override
   public Set<String> getAllGenres() {
-    //TODO ProgamController
+    // TODO ProgamController
     return programRepo.getAllGenres();
   }
 
   @Override
-  public Set<VenueDto> searchVenue(String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
-    return venueController.getAllVenuesByFilter(from,to,genre,description);
+  public Set<VenueDto> searchVenue(
+      String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
+    return venueController.getAllVenuesByFilter(from, to, genre, description, artistName);
   }
 
   @Override

@@ -17,6 +17,6 @@ public class Program {
     private String description = "";
     @ManyToOne
     private Person organizer;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Artist> artists;
 }

@@ -5,9 +5,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-
 public class ProgramController {
-
-    private final ProgramService programService;
-    private final ProgramMapper programMapper;
+  private final ProgramService programService;
+  private final ProgramMapper programMapper;
 }

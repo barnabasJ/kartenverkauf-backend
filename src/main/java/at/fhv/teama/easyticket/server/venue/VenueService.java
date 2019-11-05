@@ -11,24 +11,14 @@ import java.util.Set;
 public class VenueService {
   private final VenueRepository venueRepo;
 
-  /*
-  public Set<Venue> getAllVenues() {
-    return venueRepo.findAllByDateGreaterThanEqual(LocalDateTime.now());
-  }
-
-  public Set<Venue> getAllVenuesByGenere(String genre) {
-    return venueRepo.findAllByProgram_GenreLikeAndDateGreaterThanEqual(genre,LocalDateTime.now());
-  }
-
-  public Set<Venue> getAllVenuesByDate(LocalDateTime date) {
-    return venueRepo.findAllByDateAndDateGreaterThanEqual(date, LocalDateTime.now());
-  }
-
-  public Set<Venue> getAllVenuesbyDescription(String descritpion) {
-    return venueRepo.findAllByProgram_DescriptionLikeAndDateGreaterThanEqual(descritpion, LocalDateTime.now());
-  }*/
-
-  public Set<Venue> getAllVenusByFilter(LocalDateTime dateTime, LocalDateTime dateTimeNow, String genre, String description){
-    return venueRepo.findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLike(dateTime,dateTimeNow,genre,description);
+  public Set<Venue> getAllVenusByFilter(
+      LocalDateTime dateTime,
+      LocalDateTime dateTimeNow,
+      String genre,
+      String description,
+      String artist) {
+    return venueRepo
+        .findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLikeAndProgram_Artists_NameLike(
+            dateTime, dateTimeNow, genre, description, artist);
   }
 }
