@@ -13,10 +13,10 @@ public class Program {
     @Id
     @GeneratedValue
     private Long id;
-    private String genre;
-    private String description;
+    private String genre = "";
+    private String description = "";
     @ManyToOne
     private Person organizer;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private Set<Artist> artists;
 }

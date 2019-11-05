@@ -6,5 +6,12 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public interface VenueRepository extends CrudRepository<Venue, Long> {
-    Set<Venue> findAllByDateGreaterThanEqual(LocalDateTime date);
+
+  Set<Venue>
+      findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLikeAndProgram_Artists_NameLike(
+          LocalDateTime dateStart,
+          LocalDateTime dateEnd,
+          String genre,
+          String description,
+          String artist);
 }

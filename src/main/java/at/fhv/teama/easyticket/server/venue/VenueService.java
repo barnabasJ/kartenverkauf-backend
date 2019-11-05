@@ -11,7 +11,14 @@ import java.util.Set;
 public class VenueService {
   private final VenueRepository venueRepo;
 
-  public Set<Venue> getAllVenues() {
-    return venueRepo.findAllByDateGreaterThanEqual(LocalDateTime.now());
+  public Set<Venue> getAllVenusByFilter(
+      LocalDateTime dateTime,
+      LocalDateTime dateTimeNow,
+      String genre,
+      String description,
+      String artist) {
+    return venueRepo
+        .findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLikeAndProgram_Artists_NameLike(
+            dateTime, dateTimeNow, genre, description, artist);
   }
 }
