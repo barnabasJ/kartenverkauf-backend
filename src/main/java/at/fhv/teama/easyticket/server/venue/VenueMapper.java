@@ -13,6 +13,7 @@ import org.mapstruct.NullValueCheckStrategy;
     componentModel = "spring",
     nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
     uses = {ProgramMapper.class, PersonMapper.class, AddressMapper.class})
+
 public interface VenueMapper {
 
   VenueDto venueToVenueDto(Venue venue, @Context MapperContext context);

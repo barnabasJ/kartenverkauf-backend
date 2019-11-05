@@ -21,5 +21,4 @@ public class Ticket {
     private Venue venue;
     @ManyToOne
     private Person person;
-
 }

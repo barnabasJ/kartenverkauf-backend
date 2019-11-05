@@ -6,6 +6,7 @@ import at.fhv.teama.easyticket.server.address.AddressMapper;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.program.ProgramMapper;
 import org.mapstruct.Context;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 
@@ -19,3 +20,4 @@ public interface TicketMapper {
 
   Ticket ticketDtoToTicket(TicketDto ticket, @Context MapperContext context);
 }
+
