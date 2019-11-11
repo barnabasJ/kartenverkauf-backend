@@ -22,11 +22,11 @@ public class ProgramService {
     this.em = em;
   }
 
-  public void saveProgram(Program program) {
-    programRepo.save(program);
+  public Program saveProgram(Program program) {
+    return programRepo.save(program);
   }
 
-  @RolesAllowed({"User"})
+  //@RolesAllowed({"User"})
   public List<Program> getAllPrograms() {
     return StreamSupport.stream(programRepo.findAll().spliterator(), false)
         .collect(Collectors.toList());

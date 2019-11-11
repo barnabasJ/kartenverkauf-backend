@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
 import javax.persistence.EntityManager;
-import javax.swing.text.html.parser.Entity;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,8 +16,8 @@ public class ProgramController {
     private final ProgramMapper programMapper;
     private final EntityManager em;
 
-    public void saveProgram(ProgramDto programDto) {
-        programService.saveProgram(programMapper.programDtoToProgram(programDto, new MapperContext(em)));
+    public ProgramDto saveProgram(ProgramDto programDto) {
+        return programMapper.programToProgramDto(programService.saveProgram(programMapper.programDtoToProgram(programDto, new MapperContext(em))), new MapperContext());
     }
 
     public Set<ProgramDto> getAllPrograms() {
