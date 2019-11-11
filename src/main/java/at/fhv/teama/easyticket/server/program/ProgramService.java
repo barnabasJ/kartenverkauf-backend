@@ -22,8 +22,8 @@ public class ProgramService {
     this.em = em;
   }
 
-  public void saveProgram(ProgramDto programDto) {
-    programRepo.save(programMapper.programDtoToProgram(programDto, new MapperContext(em)));
+  public void saveProgram(Program program) {
+    programRepo.save(program);
   }
 
   @RolesAllowed({"User"})
