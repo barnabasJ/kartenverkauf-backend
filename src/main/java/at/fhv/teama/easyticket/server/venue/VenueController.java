@@ -16,7 +16,7 @@ public class VenueController {
   private final VenueService venueService;
   private final VenueMapper venueMapper;
 
-  @Transactional(readOnly = true)
+  //@Transactional(readOnly = true)
   public Set<VenueDto> getAllVenuesByFilter(
       LocalDateTime localDateTimeStart,
       LocalDateTime localDateTimeEnd,

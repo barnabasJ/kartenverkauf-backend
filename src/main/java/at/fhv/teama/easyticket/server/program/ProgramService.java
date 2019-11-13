@@ -31,4 +31,8 @@ public class ProgramService {
     return StreamSupport.stream(programRepo.findAll().spliterator(), false)
         .collect(Collectors.toList());
   }
+
+  public List<String> getAllGenrse(){
+    return StreamSupport.stream(programRepo.getAllGenres().spliterator(),false).collect(Collectors.toList());
+  }
 }

@@ -63,4 +63,26 @@ public class ProgramControllerTest {
 
     assertEquals(Set.of(program1Dto,program2Dto,program3Dto),programController.getAllPrograms());
   }
+
+  @Test
+  public void getAllGenres()
+  {
+    Program program1 = new Program();
+    program1.setGenre("Test1");
+    ProgramDto program1Dto = programMapper.programToProgramDto(program1,new MapperContext());
+    program1Dto = programController.saveProgram(program1Dto);
+
+    Program program2 = new Program();
+    program2.setGenre("Test2");
+    ProgramDto program2Dto = programMapper.programToProgramDto(program2,new MapperContext());
+    program2Dto = programController.saveProgram(program2Dto);
+
+    Program program3 = new Program();
+    program3.setGenre("Test3");
+    ProgramDto program3Dto = programMapper.programToProgramDto(program3,new MapperContext());
+    program3Dto = programController.saveProgram(program3Dto);
+
+    assertEquals(Set.of("Test1","Test2","Test3"),programController.getAllGenres());
+  }
+
 }

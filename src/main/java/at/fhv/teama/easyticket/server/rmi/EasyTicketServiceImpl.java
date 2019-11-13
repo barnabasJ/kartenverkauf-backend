@@ -7,6 +7,7 @@ import at.fhv.teama.easyticket.rmi.EasyTicketService;
 import at.fhv.teama.easyticket.server.MapperContext;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.person.PersonRepo;
+import at.fhv.teama.easyticket.server.program.ProgramController;
 import at.fhv.teama.easyticket.server.program.ProgramRepository;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
@@ -24,9 +25,9 @@ import java.util.stream.StreamSupport;
 public class EasyTicketServiceImpl implements EasyTicketService {
   private final VenueController venueController;
   private final TicketController ticketController;
+  private final ProgramController programController;
 
   // TODO remove
-  private final ProgramRepository programRepo;
   private final PersonRepo personRepo;
   private final PersonMapper personMapper;
 
@@ -37,8 +38,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<String> getAllGenres() {
-    // TODO ProgamController
-    return programRepo.getAllGenres();
+    return programController.getAllGenres();
   }
 
   @Override
