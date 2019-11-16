@@ -1,10 +1,9 @@
 package at.fhv.teama.easyticket.server.venue;
 
 import at.fhv.teama.easyticket.dto.VenueDto;
-import at.fhv.teama.easyticket.server.MapperContext;
+import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Set;

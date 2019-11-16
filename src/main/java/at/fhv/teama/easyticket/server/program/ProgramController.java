@@ -1,10 +1,11 @@
 package at.fhv.teama.easyticket.server.program;
 
 import at.fhv.teama.easyticket.dto.ProgramDto;
-import at.fhv.teama.easyticket.server.MapperContext;
+import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class ProgramController {
         return programMapper.programToProgramDto(programService.saveProgram(programMapper.programDtoToProgram(programDto, new MapperContext(em))), new MapperContext());
     }
 
+    @RolesAllowed("ROLE_USER")
     public Set<ProgramDto> getAllPrograms() {
         return programService.getAllPrograms().stream().map(p -> programMapper.programToProgramDto(p, new MapperContext())).collect(Collectors.toSet());
 

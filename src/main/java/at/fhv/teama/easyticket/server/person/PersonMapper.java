@@ -1,9 +1,8 @@
 package at.fhv.teama.easyticket.server.person;
 
 import at.fhv.teama.easyticket.dto.PersonDto;
-import at.fhv.teama.easyticket.server.MapperContext;
+import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import at.fhv.teama.easyticket.server.address.AddressMapper;
-import at.fhv.teama.easyticket.server.venue.VenueMapper;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
