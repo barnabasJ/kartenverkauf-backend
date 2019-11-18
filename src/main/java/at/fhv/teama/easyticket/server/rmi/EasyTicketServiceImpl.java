@@ -4,22 +4,25 @@ import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
-import at.fhv.teama.easyticket.server.MapperContext;
+import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.person.PersonRepo;
 import at.fhv.teama.easyticket.server.program.ProgramController;
-import at.fhv.teama.easyticket.server.program.ProgramRepository;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.security.RolesAllowed;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class EasyTicketServiceImpl implements EasyTicketService {
@@ -32,6 +35,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   private final PersonMapper personMapper;
 
   @Override
+  @RolesAllowed("USER")
   public Set<VenueDto> getAllVenues() {
     return venueController.getAllVenuesByFilter(null, null, null, null, null);
   }
@@ -57,5 +61,22 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   @Override
   public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
     return ticketController.buyTickets(tickets);
+  }
+
+  @Override
+  public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
+    return new HashSet<>();
+  }
+
+  @Override
+  public Boolean unreserveTickets(Collection<TicketDto> tickets) {
+    return true;
+  }
+
+  @Override
+  @RolesAllowed("USER")
+  public boolean login(String username, String password) {
+    log.info("Trying to log in as " + username);
+    return true;
   }
 }

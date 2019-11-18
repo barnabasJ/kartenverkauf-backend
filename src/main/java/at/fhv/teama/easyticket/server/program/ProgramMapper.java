@@ -1,7 +1,7 @@
 package at.fhv.teama.easyticket.server.program;
 
 import at.fhv.teama.easyticket.dto.ProgramDto;
-import at.fhv.teama.easyticket.server.MapperContext;
+import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import at.fhv.teama.easyticket.server.person.ArtistMapper;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.venue.VenueMapper;

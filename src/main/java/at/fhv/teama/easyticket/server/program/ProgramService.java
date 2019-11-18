@@ -1,7 +1,5 @@
 package at.fhv.teama.easyticket.server.program;
 
-import at.fhv.teama.easyticket.dto.ProgramDto;
-import at.fhv.teama.easyticket.server.MapperContext;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.security.RolesAllowed;
@@ -26,7 +24,7 @@ public class ProgramService {
     return programRepo.save(program);
   }
 
-  //@RolesAllowed({"User"})
+  @RolesAllowed({"USER"})
   public List<Program> getAllPrograms() {
     return StreamSupport.stream(programRepo.findAll().spliterator(), false)
         .collect(Collectors.toList());

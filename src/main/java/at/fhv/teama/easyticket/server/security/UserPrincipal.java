@@ -1,5 +1,6 @@
-package at.fhv.teama.easyticket.server.user;
+package at.fhv.teama.easyticket.server.security;
 
+import at.fhv.teama.easyticket.server.user.EasyTicketUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +17,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-    return Arrays.asList(new SimpleGrantedAuthority("ROLE_User"));
+    return Arrays.asList(new SimpleGrantedAuthority("USER"));
     }
 
     @Override

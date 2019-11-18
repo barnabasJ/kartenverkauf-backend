@@ -13,7 +13,7 @@
  * express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package at.fhv.teama.easyticket.server;
+package at.fhv.teama.easyticket.server.mapping;
 
 import at.fhv.teama.easyticket.interfaces.ObjectWithId;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
-package at.fhv.teama.easyticket.server.user;
+package at.fhv.teama.easyticket.server.security;
 
+import at.fhv.teama.easyticket.server.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
