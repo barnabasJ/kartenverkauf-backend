@@ -15,10 +15,15 @@ public class TicketService {
     }
 
     public boolean reserveTicket(Ticket ticket) {
-        if (ticket.getPerson() == null) return false;
+        // if (ticket.getPerson() == null) return false;
         ticket.setState(TicketState.RESERVERD);
         Ticket soldTicket = ticketRepository.save(ticket);
         return soldTicket.getState() == TicketState.RESERVERD;
     }
 
+    public boolean unreserveTicket(Ticket ticket) {
+        ticket.setState(TicketState.FREE);
+        Ticket soldTicket = ticketRepository.save(ticket);
+        return soldTicket.getState() == TicketState.FREE;
+    }
 }
