@@ -51,7 +51,7 @@ public class TicketController {
             else available.add(ticket);
         }
 
-        if (unavailable.size() > 0) return unavailable;
+        if (!unavailable.isEmpty()) return unavailable;
         else {
             for (Ticket ticket : available) {
                 ticketService.reserveTicket(ticket);
@@ -63,7 +63,7 @@ public class TicketController {
 
     @Transactional
     public Boolean unreserveTickets(Collection<TicketDto> tickets) {
-        if (tickets.size() == 0) return false;
+        if (tickets.isEmpty()) return false;
         for (TicketDto ticketDto : tickets) {
             Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
             ticketService.unreserveTicket(ticket);
