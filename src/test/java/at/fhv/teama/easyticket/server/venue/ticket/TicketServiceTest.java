@@ -1,6 +1,5 @@
 package at.fhv.teama.easyticket.server.venue.ticket;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,6 @@ import static org.junit.Assert.assertFalse;
 @SpringBootTest
 public class TicketServiceTest {
     @Autowired private TicketService ticketService;
-
-
-    @Before
-    public void setup() {
-        
-    }
 
     @Test
     public void sellTicket() {

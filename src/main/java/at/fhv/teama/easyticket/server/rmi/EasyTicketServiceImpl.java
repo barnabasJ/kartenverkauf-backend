@@ -35,7 +35,6 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   private final PersonMapper personMapper;
 
   @Override
-  @RolesAllowed("USER")
   public Set<VenueDto> getAllVenues() {
     return venueController.getAllVenuesByFilter(null, null, null, null, null);
   }
@@ -65,12 +64,12 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
-    return new HashSet<>();
+    return ticketController.reserveTickets(tickets);
   }
 
   @Override
   public Boolean unreserveTickets(Collection<TicketDto> tickets) {
-    return true;
+    return ticketController.unreserveTickets(tickets);
   }
 
   @Override

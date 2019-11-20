@@ -15,7 +15,7 @@ apply plugin: 'net.ltgt.apt-idea'
 
 sonarqube {
     properties {
-        property 'sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage'
+        property 'sonar.projectName', 'kartenverkauf-backend'
     }
 }
 
