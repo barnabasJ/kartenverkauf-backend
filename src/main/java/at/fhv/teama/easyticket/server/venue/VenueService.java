@@ -18,7 +18,7 @@ public class VenueService {
       String description,
       String artist) {
     return venueRepo
-        .findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeAndProgram_DescriptionLikeAndProgram_Artists_NameLike(
+        .findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeIgnoreCaseAndProgram_DescriptionLikeIgnoreCaseAndProgram_Artists_NameLikeIgnoreCase(
             dateTime, dateTimeNow, genre, description, artist);
   }
 }
