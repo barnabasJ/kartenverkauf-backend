@@ -49,7 +49,8 @@ public class TicketController {
 
         for (TicketDto ticketDto : tickets) {
             Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
-            if ((ticket.getState() != FREE) || ticket.getPerson() == null) unavailable.add(ticketDto);
+            if ((ticket.getState() != FREE) || ticketDto.getPerson() == null) unavailable.add(ticketDto);
+            else if ((! ticketService.isTicketReservedByPerson(ticket))) unavailable.add(ticketDto);
             else available.add(ticket);
         }
 
