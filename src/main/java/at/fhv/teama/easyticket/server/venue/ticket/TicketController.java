@@ -28,7 +28,7 @@ public class TicketController {
         }
 
         // Check availability and return unavailable tickets
-        if (unavailable.size() > 0) return unavailable;
+        if (!unavailable.isEmpty()) return unavailable;
         else {
             for (Ticket ticket : available) {
                 ticketService.sellTicket(ticket);
