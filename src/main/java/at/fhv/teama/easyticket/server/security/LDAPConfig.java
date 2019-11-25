@@ -1,6 +1,7 @@
 package at.fhv.teama.easyticket.server.security;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
 @Data
 public class LDAPConfig {

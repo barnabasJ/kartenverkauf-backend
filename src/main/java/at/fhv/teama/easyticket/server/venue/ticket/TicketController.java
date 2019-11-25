@@ -49,7 +49,6 @@ public class TicketController {
         ticketService.sellTicket(ticket);
       }
     }
-
     // All tickets available - none to return
     return new HashSet<>();
   }

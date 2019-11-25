@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.jms.JMSException;
@@ -25,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Controller
 @RequiredArgsConstructor
 public class EasyTicketServiceImpl implements EasyTicketService {
   private final VenueController venueController;
@@ -34,6 +36,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   private final PersonController personController;
 
   @Override
+  @GetMapping("/venue")
   public Set<VenueDto> getAllVenues() {
     return venueController.getAllVenuesByFilter(null, null, null, null, null);
   }
