@@ -1,5 +1,6 @@
 package at.fhv.teama.easyticket.server.rmi;
 
+import at.fhv.teama.easyticket.dto.MessageDto;
 import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
@@ -12,6 +13,8 @@ import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.security.RolesAllowed;
@@ -68,14 +71,36 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   }
 
   @Override
-  public Boolean unreserveTickets(Collection<TicketDto> tickets) {
+  public boolean unreserveTickets(Collection<TicketDto> tickets) {
     return ticketController.unreserveTickets(tickets);
   }
 
   @Override
+  public void publishMessage(MessageDto message) {
+  }
+
+  @Override
+  public void publishFeed(String url, String topic) {
+  }
+
+  @Override
+  public Set<MessageDto> getAllUnreadMessages(String username) {
+    return null;
+  }
+
+  @Override
+  public void acknowledgeMessage(String id) {
+  }
+
+  @Override
   @RolesAllowed("USER")
-  public boolean login(String username, String password) {
-    log.info("Trying to log in as " + username);
-    return true;
+  public Set<String> login(String username, String password) {
+    log.info("Logged in as" + username);
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof UserDetails) {
+      return ((UserDetails) principal)
+              .getAuthorities().stream().map(Object::toString).collect(Collectors.toSet());
+    }
+    return new HashSet<>();
   }
 }
