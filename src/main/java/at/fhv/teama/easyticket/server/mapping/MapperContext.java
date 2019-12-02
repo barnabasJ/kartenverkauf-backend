@@ -21,6 +21,7 @@ import org.mapstruct.*;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
@@ -58,12 +59,13 @@ public class MapperContext {
     T entity = null;
     if (em != null && source.getId() != null) entity = em.find(type, source.getId());
     if (entity != null) return entity;
-    else
+    else {
       try {
         Constructor<T> constructors = type.getConstructor();
         return constructors.newInstance();
-      } catch (Exception e) {
+      } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
         throw new RuntimeException(e);
       }
+    }
   }
 }

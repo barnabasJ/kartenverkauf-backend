@@ -1,8 +1,5 @@
 package at.fhv.teama.easyticket.server.venue.ticket;
-
-import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
-import at.fhv.teama.easyticket.server.person.Person;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 
@@ -31,7 +28,7 @@ public class TicketController {
         }
 
         // Check availability and return unavailable tickets
-        if (unavailable.size() > 0) return unavailable;
+        if (!unavailable.isEmpty()) return unavailable;
         else {
             for (Ticket ticket : available) {
                 ticketService.sellTicket(ticket);
@@ -54,7 +51,7 @@ public class TicketController {
             else available.add(ticket);
         }
 
-        if (unavailable.size() > 0) return unavailable;
+        if (!unavailable.isEmpty()) return unavailable;
         else {
             for (Ticket ticket : available) {
                 ticketService.reserveTicket(ticket);
@@ -66,7 +63,7 @@ public class TicketController {
 
     @Transactional
     public Boolean unreserveTickets(Collection<TicketDto> tickets) {
-        if (tickets.size() == 0) return false;
+        if (tickets.isEmpty()) return false;
         for (TicketDto ticketDto : tickets) {
             Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
             ticketService.unreserveTicket(ticket);

@@ -1,6 +1,5 @@
 package at.fhv.teama.easyticket.server.venue.ticket;
 
-import at.fhv.teama.easyticket.server.person.Person;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
