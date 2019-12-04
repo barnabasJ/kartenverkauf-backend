@@ -50,7 +50,7 @@ dependencies {
     implementation "org.springframework.security:spring-security-ldap"
     implementation "org.springframework:spring-tx"
     implementation "com.unboundid:unboundid-ldapsdk"
-    implementation 'com.github.barnabasJ:kartenverkauf-shared:0.5.0'
+    implementation 'com.github.barnabasJ:kartenverkauf-shared:0.6.0'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation "org.springframework.security:spring-security-remoting"

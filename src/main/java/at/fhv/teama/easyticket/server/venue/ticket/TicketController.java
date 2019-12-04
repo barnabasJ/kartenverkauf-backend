@@ -1,4 +1,5 @@
 package at.fhv.teama.easyticket.server.venue.ticket;
+
 import at.fhv.teama.easyticket.dto.TicketDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -13,65 +14,60 @@ import static at.fhv.teama.easyticket.server.venue.ticket.TicketState.FREE;
 @Controller
 @RequiredArgsConstructor
 public class TicketController {
-    private final TicketService ticketService;
-    private final TicketRepository ticketRepo;
+  private final TicketService ticketService;
+  private final TicketRepository ticketRepo;
 
-    @Transactional
-    public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
-        Set<TicketDto> unavailable = new HashSet<>();
-        Set<Ticket> available = new HashSet<>();
+  @Transactional
+  public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
+    Set<TicketDto> unavailable = new HashSet<>();
+    Set<Ticket> available = new HashSet<>();
 
-        for (TicketDto ticketDto : tickets) {
-            Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
-            if (ticket.getState() != FREE) unavailable.add(ticketDto);
-            else available.add(ticket);
-        }
-
-        // Check availability and return unavailable tickets
-        if (!unavailable.isEmpty()) return unavailable;
-        else {
-            for (Ticket ticket : available) {
-                ticketService.sellTicket(ticket);
-            }
-        }
-
-        // All tickets available - none to return
-        return new HashSet<>();
+    for (TicketDto ticketDto : tickets) {
+      Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
+      if (ticket.getState() != FREE) unavailable.add(ticketDto);
+      else available.add(ticket);
     }
 
-    @Transactional
-    public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
-        Set<TicketDto> unavailable = new HashSet<>();
-        Set<Ticket> available = new HashSet<>();
-
-        for (TicketDto ticketDto : tickets) {
-            Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
-            if ((ticket.getState() != FREE) || ticketDto.getPerson() == null) unavailable.add(ticketDto);
-            else if ((! ticketService.isTicketReservedByPerson(ticket))) unavailable.add(ticketDto);
-            else available.add(ticket);
-        }
-
-        if (!unavailable.isEmpty()) return unavailable;
-        else {
-            for (Ticket ticket : available) {
-                ticketService.reserveTicket(ticket);
-            }
-        }
-
-        return new HashSet<>();
+    // Check availability and return unavailable tickets
+    if (!unavailable.isEmpty()) return unavailable;
+    else {
+      for (Ticket ticket : available) {
+        ticketService.sellTicket(ticket);
+      }
     }
 
-    @Transactional
-    public Boolean unreserveTickets(Collection<TicketDto> tickets) {
-        if (tickets.isEmpty()) return false;
-        for (TicketDto ticketDto : tickets) {
-            Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
-            ticketService.unreserveTicket(ticket);
-        }
-        return true;
+    // All tickets available - none to return
+    return new HashSet<>();
+  }
+
+  @Transactional
+  public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
+    Set<TicketDto> unavailable = new HashSet<>();
+    Set<Ticket> available = new HashSet<>();
+
+    for (TicketDto ticketDto : tickets) {
+      Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
+      if ((ticket.getState() != FREE) || ticketDto.getPerson() == null) unavailable.add(ticketDto);
+      else available.add(ticket);
     }
 
+    if (!unavailable.isEmpty()) return unavailable;
+    else {
+      for (Ticket ticket : available) {
+        ticketService.reserveTicket(ticket);
+      }
+    }
 
+    return new HashSet<>();
+  }
+
+  @Transactional
+  public Boolean unreserveTickets(Collection<TicketDto> tickets) {
+    if (tickets.isEmpty()) return false;
+    for (TicketDto ticketDto : tickets) {
+      Ticket ticket = ticketRepo.findById(ticketDto.getId()).get();
+      ticketService.unreserveTicket(ticket);
+    }
+    return true;
+  }
 }
-
-
