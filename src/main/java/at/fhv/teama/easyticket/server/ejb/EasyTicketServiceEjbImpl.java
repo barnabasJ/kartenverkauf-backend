@@ -5,6 +5,7 @@ import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
+import org.springframework.context.ApplicationContext;
 
 import javax.ejb.Stateless;
 import java.time.LocalDateTime;
@@ -14,6 +15,9 @@ import java.util.Set;
 
 @Stateless(name = "EasyTicketService")
 public class EasyTicketServiceEjbImpl implements EasyTicketService {
+  private String username = "no user";
+  private ApplicationContext apx;
+
   @Override
   public Set<VenueDto> getAllVenues() {
     return null;
@@ -72,6 +76,10 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<String> login(String username, String password) {
+    this.apx = SpringEjbConnector.apx;
+    System.out.println("logged in  as " + this.username);
+    System.out.println("login as " + username);
+    this.username = username;
     return new HashSet<>();
   }
 }

@@ -12,7 +12,7 @@ plugins {
 
 group = 'at.fhv.team-a.kartenverkauf.backend'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.11'
+sourceCompatibility = '1.8'
 
 apply plugin: 'net.ltgt.apt-idea'
 
@@ -44,12 +44,12 @@ repositories {
 }
 
 cargo {
-    containerId = 'wildfly12x'
+    containerId = 'wildfly18x'
     port = 9090
 
     local {
         installer {
-            installUrl = 'https://download.jboss.org/wildfly/12.0.0.Final/wildfly-12.0.0.Final.zip'
+            installUrl = 'https://download.jboss.org/wildfly/18.0.1.Final/wildfly-18.0.1.Final.zip'
             downloadDir = file("$buildDir/download")
             extractDir = file("$buildDir/extract")
         }
@@ -80,10 +80,14 @@ dependencies {
     implementation "org.springframework.security:spring-security-remoting"
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.reactivestreams:reactive-streams:1.0.1'
+    implementation 'org.apache.activemq:activemq-core:5.7.0'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    compile 'org.apache.activemq:activemq-core:5.7.0'
+    // java ee
+    def cargoVersion = '1.7.8'
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion",
+          "org.codehaus.cargo:cargo-ant:$cargoVersion"
 }
