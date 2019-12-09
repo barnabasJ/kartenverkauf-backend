@@ -13,15 +13,6 @@ import java.security.*;
 public class EasyTicketServerApplication {
 
   public static void main(String[] args) {
-    Policy.setPolicy(
-        new Policy() {
-          @Override
-          public PermissionCollection getPermissions(CodeSource codesource) {
-            Permissions p = new Permissions();
-            p.add(new AllPermission());
-            return p;
-          }
-        });
     SpringApplication.run(EasyTicketServerApplication.class, args);
       try {
           MessagingController.start_broker();

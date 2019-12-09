@@ -79,6 +79,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.security:spring-security-remoting"
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.reactivestreams:reactive-streams:1.0.1'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
