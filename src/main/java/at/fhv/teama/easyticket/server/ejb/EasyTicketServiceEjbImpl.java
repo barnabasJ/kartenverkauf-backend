@@ -5,6 +5,9 @@ import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
+import at.fhv.teama.easyticket.server.program.ProgramController;
+import at.fhv.teama.easyticket.server.venue.VenueController;
+import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import org.springframework.context.ApplicationContext;
 
 import javax.ejb.Stateless;
@@ -20,18 +23,18 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<VenueDto> getAllVenues() {
-    return null;
+    return SpringEjbConnector.getBean(VenueController.class).getAllVenues();
   }
 
   @Override
   public Set<String> getAllGenres() {
-    return null;
+    return SpringEjbConnector.getBean(ProgramController.class).getAllGenres();
   }
 
   @Override
   public Set<VenueDto> searchVenue(
       String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
-    return null;
+    return SpringEjbConnector.getBean(VenueController.class).getAllVenuesByFilter(from, to, genre, description, artistName);
   }
 
   @Override
@@ -41,7 +44,7 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
-    return null;
+    return SpringEjbConnector.getBean(TicketController.class).buyTickets(tickets);
   }
 
   @Override
@@ -51,7 +54,7 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public boolean unreserveTickets(Collection<TicketDto> tickets) {
-    return false;
+    return SpringEjbConnector.getBean(TicketController.class).unreserveTickets(tickets);
   }
 
   @Override

@@ -28,7 +28,7 @@ public class SpringEjbConnector implements ApplicationContextAware {
      * @param beanClass the class of the bean to get.
      * @return an Object reference to the named bean.
      */
-    public static Object getBean(Class clazz) {
+    public static <T> T getBean(Class<T> clazz) {
         return apx.getBean(clazz);
     }
 }
