@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import main.java.at.fhv.teama.easyticket.server.messaging.RssMessage;
 
 public class XMLParser {
 
