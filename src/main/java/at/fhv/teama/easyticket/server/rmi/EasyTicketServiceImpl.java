@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.security.RolesAllowed;
+import javax.jms.JMSException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public void publishMessage(MessageDto messageDto) {
-    // Todo change interface to "public void publishMessage(MessageDto messageDto, String topicName)"
+    // Todo change interface to "public void publishMessage(String topicName, MessageDto messageDto)"
     try {
       MessagingController.publishMessageToTopic("topic", messageDto.getContent());
     } catch (JMSException e) {
@@ -93,7 +94,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
-    // ToDo change signature to "public Set<MessageDto> getAllUnreadMessages(String topicName, String userName)"
+    // Todo change signature to "public Set<MessageDto> getAllUnreadMessages(String topicName, String userName)"
     Set<MessageDto> messageDtos = new HashSet<>();
     try {
       messageDtos = MessagingController.getMessages("topic", username);
@@ -105,7 +106,8 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public void acknowledgeMessage(String messageText) {
-    // Todo change signature to "public void acknowledgeMessage(String messageText, String userName)"
+    // Todo change signature to "public void acknowledgeMessage(MessageDto messageDto, String userName)"
+
     try {
       MessagingController.acknowledgeMessage("client1", messageText);
     } catch (JMSException e) {
