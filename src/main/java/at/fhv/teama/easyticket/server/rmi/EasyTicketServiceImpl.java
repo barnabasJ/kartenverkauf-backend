@@ -6,6 +6,7 @@ import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
 import at.fhv.teama.easyticket.server.mapping.MapperContext;
+import at.fhv.teama.easyticket.server.messaging.MessagingController;
 import at.fhv.teama.easyticket.server.person.PersonMapper;
 import at.fhv.teama.easyticket.server.person.PersonRepo;
 import at.fhv.teama.easyticket.server.program.ProgramController;
@@ -76,20 +77,40 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   }
 
   @Override
-  public void publishMessage(MessageDto message) {
+  public void publishMessage(MessageDto messageDto) {
+    // Todo change interface to "public void publishMessage(MessageDto messageDto, String topicName)"
+    try {
+      MessagingController.publishMessageToTopic("topic", messageDto.getContent());
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void publishFeed(String url, String topic) {
+    MessagingController.publishFeed(url,topic);
   }
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
-    return null;
+    // ToDo change signature to "public Set<MessageDto> getAllUnreadMessages(String topicName, String userName)"
+    Set<MessageDto> messageDtos = new HashSet<>();
+    try {
+      messageDtos = MessagingController.getMessages("topic", username);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
+    return messageDtos;
   }
 
   @Override
-  public void acknowledgeMessage(String id) {
+  public void acknowledgeMessage(String messageText) {
+    // Todo change signature to "public void acknowledgeMessage(String messageText, String userName)"
+    try {
+      MessagingController.acknowledgeMessage("client1", messageText);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
