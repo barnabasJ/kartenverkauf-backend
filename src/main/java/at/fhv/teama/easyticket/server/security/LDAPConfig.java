@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class LDAPConfig {
-  private String userDnPatterns;
+  private String[] userDnPatterns;
   private String groupSearchBase;
   private String userSearchBase;
   private String userSearchFilter;
