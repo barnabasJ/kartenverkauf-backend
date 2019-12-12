@@ -1,8 +1,6 @@
 package at.fhv.teama.easyticket.server.messaging;
 
 import at.fhv.teama.easyticket.dto.MessageDto;
-import main.java.at.fhv.teama.easyticket.server.messaging.RssMessage;
-import main.java.at.fhv.teama.easyticket.server.messaging.XMLParser;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
@@ -47,7 +45,7 @@ public class MessagingController {
      * @param topicName   Name of the topic
      * @param messageText The message to be published
      */
-    public static void publishMessageToTopic(String topicName, String messageText) throws JMSException {
+    public static synchronized void publishMessageToTopic(String topicName, String messageText) throws JMSException {
         String url = ActiveMQConnection.DEFAULT_BROKER_URL;
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
@@ -57,6 +55,8 @@ public class MessagingController {
         MessageProducer producer = session.createProducer(destination);
         TextMessage message = session.createTextMessage(messageText);
         producer.send(message);
+        producer.close();
+        session.close();
         connection.close();
     }
 
@@ -67,7 +67,7 @@ public class MessagingController {
      * @param userName  Name of the user
      * @return All unacknowledged messages for a specific topic and user
      */
-    public static Set<MessageDto> getMessages(String topicName, String userName) throws JMSException {
+    public static synchronized Set<MessageDto> getMessages(String topicName, String userName) throws JMSException {
         String url = ActiveMQConnection.DEFAULT_BROKER_URL;
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
@@ -103,6 +103,8 @@ public class MessagingController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        consumer.close();
+        session.close();
         connection.close();
         return messageDtos;
     }
@@ -115,7 +117,7 @@ public class MessagingController {
      * @param userName    Name of the user that acknowledges the message
      * @param messageText The message content, used to identify the message to be acknowledged
      */
-    public static void acknowledgeMessage(String userName, String messageText) throws JMSException {
+    public static synchronized void acknowledgeMessage(String userName, String messageText) throws JMSException {
         String url = ActiveMQConnection.DEFAULT_BROKER_URL;
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
@@ -152,6 +154,8 @@ public class MessagingController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        consumer.close();
+        session.close();
         connection.close();
 
     }

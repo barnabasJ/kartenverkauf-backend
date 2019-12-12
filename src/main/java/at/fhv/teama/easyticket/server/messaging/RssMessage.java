@@ -1,4 +1,4 @@
-package main.java.at.fhv.teama.easyticket.server.messaging;
+package at.fhv.teama.easyticket.server.messaging;
 
 public class RssMessage {
 

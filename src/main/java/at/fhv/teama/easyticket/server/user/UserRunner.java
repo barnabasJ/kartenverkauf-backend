@@ -26,6 +26,10 @@ public class UserRunner implements CommandLineRunner {
     alice.setUsername("alice");
     alice.setPassword(passwordEncoder.encode("password"));
     alice.setRoles(Arrays.asList(Roles.USER, Roles.PUBLISHER).stream().collect(Collectors.toSet()));
+    EasyTicketUser carl = new EasyTicketUser();
+    bob.setUsername("carl");
+    bob.setPassword(passwordEncoder.encode("password"));
+    bob.setRoles(Arrays.asList(Roles.USER).stream().collect(Collectors.toSet()));
 
     log.info(Roles.USER.toString());
 

@@ -82,7 +82,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public void publishFeed(String url, String topic) {
-    MessagingController.publishFeed(url, topic);
+    MessagingController.publishFeed(url, "topic");
   }
 
   @Override
