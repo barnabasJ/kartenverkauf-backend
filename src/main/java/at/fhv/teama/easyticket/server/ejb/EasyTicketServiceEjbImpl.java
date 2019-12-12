@@ -5,12 +5,15 @@ import at.fhv.teama.easyticket.dto.PersonDto;
 import at.fhv.teama.easyticket.dto.TicketDto;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.rmi.EasyTicketService;
+import at.fhv.teama.easyticket.server.messaging.MessagingController;
+import at.fhv.teama.easyticket.server.person.PersonController;
 import at.fhv.teama.easyticket.server.program.ProgramController;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import org.springframework.context.ApplicationContext;
 
 import javax.ejb.Stateless;
+import javax.jms.JMSException;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,7 +41,7 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<PersonDto> getAllCustomer() {
-    return null;
+    return SpringEjbConnector.getBean(PersonController.class).getAllCustomer();
   }
 
   @Override
@@ -48,7 +51,7 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
-    return null;
+    return SpringEjbConnector.getBean(TicketController.class).reserveTickets(tickets);
   }
 
   @Override
@@ -57,23 +60,39 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
   }
 
   @Override
-  public void publishMessage(MessageDto message) {
-
+  public void publishMessage(MessageDto messageDto) {
+    try {
+      SpringEjbConnector.getBean(MessagingController.class).publishMessageToTopic("topic", messageDto.getContent());
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
   public void publishFeed(String url, String topic) {
-
+    SpringEjbConnector.getBean(MessagingController.class).publishFeed(url,topic);
   }
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
-    return null;
+
+    Set<MessageDto> messageDtos = new HashSet<>();
+    try {
+      messageDtos = SpringEjbConnector.getBean(MessagingController.class).getMessages("topic", username);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
+    return messageDtos;
   }
 
   @Override
-  public void acknowledgeMessage(String id) {
+  public void acknowledgeMessage(String messageText) {
 
+    try {
+      SpringEjbConnector.getBean(MessagingController.class).acknowledgeMessage("client1", messageText);
+    } catch (JMSException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
