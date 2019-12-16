@@ -4,11 +4,15 @@ import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RestController
 @Controller
 @RequiredArgsConstructor
 public class VenueController {
@@ -16,12 +20,13 @@ public class VenueController {
   private final VenueMapper venueMapper;
 
   //@Transactional(readOnly = true)
+  @GetMapping("/venues/search")
   public Set<VenueDto> getAllVenuesByFilter(
-      LocalDateTime localDateTimeStart,
-      LocalDateTime localDateTimeEnd,
-      String genre,
-      String description,
-      String artist) {
+          @RequestParam(required = false) LocalDateTime localDateTimeStart,
+          @RequestParam(required = false) LocalDateTime localDateTimeEnd,
+          @RequestParam(required = false) String genre,
+          @RequestParam(required = false) String description,
+          @RequestParam(required = false) String artist) {
     genre = sanitizeStringInput(genre);
     description = sanitizeStringInput(description);
     artist = sanitizeStringInput(artist);

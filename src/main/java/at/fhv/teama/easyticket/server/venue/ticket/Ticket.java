@@ -2,6 +2,7 @@ package at.fhv.teama.easyticket.server.venue.ticket;
 
 import at.fhv.teama.easyticket.server.person.Person;
 import at.fhv.teama.easyticket.server.venue.Venue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Ticket {
     @ManyToOne
     private Category category;
     @ManyToOne
+    @JsonIgnore
     private Venue venue;
     @ManyToOne
     private Person person;
