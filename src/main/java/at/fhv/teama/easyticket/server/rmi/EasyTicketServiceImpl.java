@@ -71,8 +71,6 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public void publishMessage(MessageDto messageDto) {
-    // Todo change interface to "public void publishMessage(String topicName, MessageDto
-    // messageDto)"
     try {
       MessagingController.publishMessageToTopic("topic", messageDto.getContent());
     } catch (JMSException e) {
@@ -87,11 +85,9 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
-    // Todo change signature to "public Set<MessageDto> getAllUnreadMessages(String topicName,
-    // String userName)"
     Set<MessageDto> messageDtos = new HashSet<>();
     try {
-      messageDtos = MessagingController.getMessages("topic", username);
+      messageDtos = MessagingController.getMessages(username);
     } catch (JMSException e) {
       e.printStackTrace();
     }

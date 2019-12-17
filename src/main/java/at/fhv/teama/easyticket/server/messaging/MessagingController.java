@@ -63,11 +63,10 @@ public class MessagingController {
     /**
      * Gets all messages for a user from a specified topic
      *
-     * @param topicName Name of the topic
      * @param userName  Name of the user
      * @return All unacknowledged messages for a specific topic and user
      */
-    public static synchronized Set<MessageDto> getMessages(String topicName, String userName) throws JMSException {
+    public static synchronized Set<MessageDto> getMessages(String userName) throws JMSException {
         String url = ActiveMQConnection.DEFAULT_BROKER_URL;
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
         Connection connection = connectionFactory.createConnection();
@@ -75,7 +74,7 @@ public class MessagingController {
         connection.start();
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 
-        Topic topic = session.createTopic(topicName);
+        Topic topic = session.createTopic("topic");
         MessageConsumer consumer = session.createDurableSubscriber(topic, userName);
         Set<MessageDto> messageDtos = new HashSet<>();
 
@@ -83,12 +82,14 @@ public class MessagingController {
         MessageListener listener = new MessageListener() {
             public void onMessage(Message message) {
                 try {
+                    long timestamp = message.getJMSTimestamp();
                     if (message instanceof TextMessage) {
                         TextMessage textMessage = (TextMessage) message;
 
                         MessageDto messageDto = new MessageDto();
+                        messageDto.setTimestamp(timestamp);
                         messageDto.setContent(textMessage.getText());
-                        messageDto.setTopic(topicName);
+                        messageDto.setTopic("topic");
                         messageDtos.add(messageDto);
                     }
                 } catch (JMSException e) {
