@@ -51,9 +51,9 @@ public class MessagingController {
         Connection connection = connectionFactory.createConnection();
         connection.start();
         Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
-        Destination destination = session.createTopic(topicName);
+        Destination destination = session.createTopic("topic");
         MessageProducer producer = session.createProducer(destination);
-        TextMessage message = session.createTextMessage(messageText);
+        TextMessage message = session.createTextMessage(topicName + "|||" + messageText);
         producer.send(message);
         producer.close();
         session.close();
@@ -63,7 +63,7 @@ public class MessagingController {
     /**
      * Gets all messages for a user from a specified topic
      *
-     * @param userName  Name of the user
+     * @param userName Name of the user
      * @return All unacknowledged messages for a specific topic and user
      */
     public static synchronized Set<MessageDto> getMessages(String userName) throws JMSException {
@@ -85,11 +85,13 @@ public class MessagingController {
                     long timestamp = message.getJMSTimestamp();
                     if (message instanceof TextMessage) {
                         TextMessage textMessage = (TextMessage) message;
+                        String tmp = textMessage.getText();
+                        String[] split = tmp.split("\\|{3}");
 
                         MessageDto messageDto = new MessageDto();
                         messageDto.setTimestamp(timestamp);
-                        messageDto.setContent(textMessage.getText());
-                        messageDto.setTopic("topic");
+                        messageDto.setTopic(split[0]);
+                        messageDto.setContent(split[1]);
                         messageDtos.add(messageDto);
                     }
                 } catch (JMSException e) {
@@ -137,10 +139,9 @@ public class MessagingController {
                 try {
                     if (message instanceof TextMessage) {
                         TextMessage textMessage = (TextMessage) message;
-                        if (textMessage.getText().equals(messageText)) {
-                            message.acknowledge();
-                        }
-
+                        String[] split = textMessage.getText().split("\\|{3}");
+                        String txt = split[1];
+                        if (txt.equals(messageText)) message.acknowledge();
                     }
                 } catch (JMSException e) {
                     System.out.println("Caught:" + e);
@@ -158,7 +159,6 @@ public class MessagingController {
         consumer.close();
         session.close();
         connection.close();
-
     }
 
     /**

@@ -72,7 +72,7 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   @Override
   public void publishMessage(MessageDto messageDto) {
     try {
-      MessagingController.publishMessageToTopic("topic", messageDto.getContent());
+      MessagingController.publishMessageToTopic(messageDto.getTopic(), messageDto.getContent());
     } catch (JMSException e) {
       e.printStackTrace();
     }
