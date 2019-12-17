@@ -1,4 +1,4 @@
-package main.java.at.fhv.teama.easyticket.server.messaging;
+package at.fhv.teama.easyticket.server.messaging;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,7 +12,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import main.java.at.fhv.teama.easyticket.server.messaging.RssMessage;
 
 public class XMLParser {
 
