@@ -3,6 +3,7 @@ package at.fhv.teama.easyticket.server.venue;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,8 +23,8 @@ public class VenueController {
   //@Transactional(readOnly = true)
   @GetMapping("/venues/search")
   public Set<VenueDto> getAllVenuesByFilter(
-          @RequestParam(required = false) LocalDateTime localDateTimeStart,
-          @RequestParam(required = false) LocalDateTime localDateTimeEnd,
+          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTimeStart,
+          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime localDateTimeEnd,
           @RequestParam(required = false) String genre,
           @RequestParam(required = false) String description,
           @RequestParam(required = false) String artist) {
