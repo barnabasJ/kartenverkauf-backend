@@ -8,4 +8,6 @@ import java.util.Set;
 public interface TicketRepository extends CrudRepository<Ticket, Long> {
     Set<Ticket> findById(long id);
     Set<Ticket> findAllByPersonAndState(Person person, TicketState state);
+    Set<Ticket> findAllByVenueId(Long id);
 }
+

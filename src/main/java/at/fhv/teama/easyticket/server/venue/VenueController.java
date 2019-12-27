@@ -3,25 +3,33 @@ package at.fhv.teama.easyticket.server.venue;
 import at.fhv.teama.easyticket.dto.VenueDto;
 import at.fhv.teama.easyticket.server.mapping.MapperContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@RestController
 @Controller
 @RequiredArgsConstructor
 public class VenueController {
   private final VenueService venueService;
   private final VenueMapper venueMapper;
 
-  //@Transactional(readOnly = true)
+  @GetMapping("/venue/search")
   public Set<VenueDto> getAllVenuesByFilter(
-      LocalDateTime localDateTimeStart,
-      LocalDateTime localDateTimeEnd,
-      String genre,
-      String description,
-      String artist) {
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+          LocalDateTime localDateTimeStart,
+      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+          LocalDateTime localDateTimeEnd,
+      @RequestParam(required = false) String genre,
+      @RequestParam(required = false) String description,
+      @RequestParam(required = false) String artist) {
     genre = sanitizeStringInput(genre);
     description = sanitizeStringInput(description);
     artist = sanitizeStringInput(artist);
@@ -56,7 +64,16 @@ public class VenueController {
     return input;
   }
 
+  @GetMapping("/venue")
   public Set<VenueDto> getAllVenues() {
     return getAllVenuesByFilter(null, null, null, null, null);
+  }
+
+  @GetMapping("/venue/{id}")
+  public VenueDto getVenueById(@PathVariable long id) {
+    return venueService
+        .getVenueById(id)
+        .map(v -> venueMapper.venueToVenueDto(v, new MapperContext()))
+        .orElse(null);
   }
 }

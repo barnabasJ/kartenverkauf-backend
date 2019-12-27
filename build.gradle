@@ -54,6 +54,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.github.barnabasJ:kartenverkauf-shared:0.7.1'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.security:spring-security-remoting"
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
