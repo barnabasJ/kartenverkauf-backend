@@ -8,9 +8,11 @@ import at.fhv.teama.easyticket.rmi.EasyTicketService;
 import at.fhv.teama.easyticket.server.messaging.MessagingController;
 import at.fhv.teama.easyticket.server.person.PersonController;
 import at.fhv.teama.easyticket.server.program.ProgramController;
+import at.fhv.teama.easyticket.server.user.UserController;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
-import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.ejb.Stateless;
 import javax.jms.JMSException;
@@ -21,7 +23,16 @@ import java.util.Set;
 
 @Stateless(name = "EasyTicketService")
 public class EasyTicketServiceEjbImpl implements EasyTicketService {
-  private String username = "no user";
+  private void setSecurityContext(UsernamePasswordAuthenticationToken upat) {
+    if (upat != null) {
+      upat.setAuthenticated(false);
+      SecurityContextHolder.getContext().setAuthentication(upat);
+    }
+  }
+
+  private void clearSecurityContext() {
+    SecurityContextHolder.clearContext();
+  }
 
   @Override
   public Set<VenueDto> getAllVenues() {
@@ -62,7 +73,7 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
   @Override
   public void publishMessage(MessageDto messageDto) {
     try {
-      SpringEjbConnector.getBean(MessagingController.class).publishMessageToTopic("topic", messageDto.getContent());
+      MessagingController.publishMessageToTopic("topic", messageDto.getContent());
     } catch (JMSException e) {
       e.printStackTrace();
     }
@@ -70,15 +81,14 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public void publishFeed(String url, String topic) {
-    SpringEjbConnector.getBean(MessagingController.class).publishFeed(url,topic);
+    MessagingController.publishFeed(url, topic);
   }
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
-
     Set<MessageDto> messageDtos = new HashSet<>();
     try {
-      messageDtos = SpringEjbConnector.getBean(MessagingController.class).getMessages("topic", username);
+      messageDtos = MessagingController.getMessages(username);
     } catch (JMSException e) {
       e.printStackTrace();
     }
@@ -86,10 +96,9 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
   }
 
   @Override
-  public void acknowledgeMessage(String messageText) {
-
+  public void acknowledgeMessage(MessageDto messageDto, String username) {
     try {
-      SpringEjbConnector.getBean(MessagingController.class).acknowledgeMessage("client1", messageText);
+      MessagingController.acknowledgeMessage(username, messageDto.getContent());
     } catch (JMSException e) {
       e.printStackTrace();
     }
@@ -97,9 +106,11 @@ public class EasyTicketServiceEjbImpl implements EasyTicketService {
 
   @Override
   public Set<String> login(String username, String password) {
-    System.out.println("logged in  as " + this.username);
-    System.out.println("login as " + username);
-    this.username = username;
-    return new HashSet<>();
+    UsernamePasswordAuthenticationToken upat =
+        new UsernamePasswordAuthenticationToken(username, password);
+    setSecurityContext(upat);
+    Set<String> roles = SpringEjbConnector.getBean(UserController.class).getRoles();
+    clearSecurityContext();
+    return roles;
   }
 }

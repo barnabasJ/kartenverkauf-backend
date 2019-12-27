@@ -8,15 +8,12 @@ import at.fhv.teama.easyticket.rmi.EasyTicketService;
 import at.fhv.teama.easyticket.server.messaging.MessagingController;
 import at.fhv.teama.easyticket.server.person.PersonController;
 import at.fhv.teama.easyticket.server.program.ProgramController;
+import at.fhv.teama.easyticket.server.user.UserController;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.security.RolesAllowed;
 import javax.jms.JMSException;
@@ -24,7 +21,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -34,9 +30,9 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   private final TicketController ticketController;
   private final ProgramController programController;
   private final PersonController personController;
+  private final UserController userController;
 
   @Override
-  @GetMapping("/venue")
   public Set<VenueDto> getAllVenues() {
     return venueController.getAllVenuesByFilter(null, null, null, null, null);
   }
@@ -107,14 +103,8 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   }
 
   @Override
-  @RolesAllowed("USER")
   public Set<String> login(String username, String password) {
     log.info("Logged in as" + username);
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    if (principal instanceof UserDetails) {
-      return ((UserDetails) principal)
-          .getAuthorities().stream().map(Object::toString).collect(Collectors.toSet());
-    }
-    return new HashSet<>();
+    return userController.getRoles();
   }
 }
