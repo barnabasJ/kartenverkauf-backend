@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -20,5 +21,9 @@ public class VenueService {
     return venueRepo
         .findAllByDateGreaterThanEqualAndDateLessThanEqualAndProgram_GenreLikeIgnoreCaseAndProgram_DescriptionLikeIgnoreCaseAndProgram_Artists_NameLikeIgnoreCase(
             dateTime, dateTimeNow, genre, description, artist);
+  }
+
+  public Optional<Venue> getVenueById(long id) {
+    return venueRepo.findById(id);
   }
 }
