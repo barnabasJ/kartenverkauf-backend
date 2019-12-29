@@ -60,6 +60,8 @@ cargo {
     }
 }
 
+cargoRunLocal.dependsOn bootWar
+
 dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
     annotationProcessor 'org.projectlombok:lombok'
