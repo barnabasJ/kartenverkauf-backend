@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "easy-ticket.security")
 public class SecurityConfig {
-    public AuthType authtype;
-    public LDAPConfig ldapConfig;
-
+  public AuthType authtype;
+  public LDAPConfig ldapConfig;
 }
