@@ -1,4 +1,4 @@
-package at.fhv.teama.easyticket.server.rmi;
+package at.fhv.teama.easyticket.server.ejb;
 
 import at.fhv.teama.easyticket.dto.MessageDto;
 import at.fhv.teama.easyticket.dto.PersonDto;
@@ -11,10 +11,11 @@ import at.fhv.teama.easyticket.server.program.ProgramController;
 import at.fhv.teama.easyticket.server.user.UserController;
 import at.fhv.teama.easyticket.server.venue.VenueController;
 import at.fhv.teama.easyticket.server.venue.ticket.TicketController;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import javax.ejb.Stateless;
 import javax.jms.JMSException;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -22,55 +23,65 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@Controller
-@RequiredArgsConstructor
-public class EasyTicketServiceImpl implements EasyTicketService {
-  private final VenueController venueController;
-  private final TicketController ticketController;
-  private final ProgramController programController;
-  private final PersonController personController;
-  private final UserController userController;
+@Stateless(name = "EasyTicketService")
+public class EasyTicketServiceEjbImpl implements EasyTicketService {
+  private void setSecurityContext(UsernamePasswordAuthenticationToken upat) {
+    if (upat != null) {
+      upat.setAuthenticated(false);
+      SecurityContextHolder.getContext().setAuthentication(upat);
+    }
+  }
+
+  private void clearSecurityContext() {
+    SecurityContextHolder.clearContext();
+  }
 
   @Override
   public Set<VenueDto> getAllVenues() {
-    return venueController.getAllVenuesByFilter(null, null, null, null, null);
+    return SpringEjbConnector.getBean(VenueController.class).getAllVenues();
   }
 
   @Override
   public Set<String> getAllGenres() {
-    return programController.getAllGenres();
+    log.info("getting genres");
+    return SpringEjbConnector.getBean(ProgramController.class).getAllGenres();
   }
 
   @Override
   public Set<VenueDto> searchVenue(
-      String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
-    return venueController.getAllVenuesByFilter(from, to, genre, description, artistName);
+          String description, String genre, String artistName, LocalDateTime from, LocalDateTime to) {
+    log.info("searching venues");
+    return SpringEjbConnector.getBean(VenueController.class).getAllVenuesByFilter(from, to, genre, description, artistName);
   }
 
   @Override
   public Set<PersonDto> getAllCustomer() {
-    return personController.getAllCustomer();
+    log.info("getting customers");
+    return SpringEjbConnector.getBean(PersonController.class).getAllCustomer();
   }
 
   @Override
   public Set<TicketDto> buyTickets(Collection<TicketDto> tickets) {
-    return ticketController.buyTickets(tickets);
+    log.info("buying tickets");
+    return SpringEjbConnector.getBean(TicketController.class).buyTickets(tickets);
   }
 
   @Override
   public Set<TicketDto> reserveTickets(Collection<TicketDto> tickets) {
-    return ticketController.reserveTickets(tickets);
+    log.info("reserving tickets");
+    return SpringEjbConnector.getBean(TicketController.class).reserveTickets(tickets);
   }
 
   @Override
   public boolean unreserveTickets(Collection<TicketDto> tickets) {
-    return ticketController.unreserveTickets(tickets);
+    log.info("unreserving tickets");
+    return SpringEjbConnector.getBean(TicketController.class).unreserveTickets(tickets);
   }
 
   @Override
   public void publishMessage(MessageDto messageDto) {
     try {
-      MessagingController.publishMessageToTopic(messageDto.getTopic(), messageDto.getContent());
+      MessagingController.publishMessageToTopic("topic", messageDto.getContent());
     } catch (JMSException e) {
       e.printStackTrace();
     }
@@ -83,16 +94,17 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
+    log.info("Getting all unread messages for: " + username);
     Set<MessageDto> messageDtos = new HashSet<>();
     return messageDtos;
-    /*
+           /*
     try {
       messageDtos = MessagingController.getMessages(username);
     } catch (JMSException e) {
       e.printStackTrace();
     }
     return messageDtos;
-     */
+            */
   }
 
   @Override
@@ -106,7 +118,12 @@ public class EasyTicketServiceImpl implements EasyTicketService {
 
   @Override
   public Set<String> login(String username, String password) {
-    log.info("Logged in as" + username);
-    return userController.getRoles();
+    log.info("Trying to log in user: " + username);
+    UsernamePasswordAuthenticationToken upat =
+            new UsernamePasswordAuthenticationToken(username, password);
+    setSecurityContext(upat);
+    Set<String> roles = SpringEjbConnector.getBean(UserController.class).getRoles();
+    clearSecurityContext();
+    return roles;
   }
 }
