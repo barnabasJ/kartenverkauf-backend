@@ -84,15 +84,12 @@ public class EasyTicketServiceImpl implements EasyTicketService {
   @Override
   public Set<MessageDto> getAllUnreadMessages(String username) {
     Set<MessageDto> messageDtos = new HashSet<>();
-    return messageDtos;
-    /*
     try {
       messageDtos = MessagingController.getMessages(username);
     } catch (JMSException e) {
       e.printStackTrace();
     }
     return messageDtos;
-     */
   }
 
   @Override
